@@ -9,14 +9,16 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>com.xuwen</groupId>
+	<groupId>io.github.vwenx</groupId>
 	<artifactId>mybatis-plus-ext-test</artifactId>
-	<version>1.0-SNAPSHOT</version>
+	<version>${mybatis-plus-ext.version}</version>
+
 	<name>mybatis-plus-ext-test</name>
-	<description>mybatis-plus-ext-test</description>
+	<description>测试项目</description>
 
 	<properties>
 		<java.version>8</java.version>
+		<mybatis-plus-ext.version>1.0.0</mybatis-plus-ext.version>
 	</properties>
 
 	<dependencies>
@@ -56,9 +58,9 @@
 		</dependency>
 
 		<dependency>
-			<groupId>com.xuwen</groupId>
+			<groupId>io.github.vwenx</groupId>
 			<artifactId>mybatis-plus-ext</artifactId>
-			<version>${project.version}</version>
+			<version>${mybatis-plus-ext.version}</version>
 		</dependency>
 
 	</dependencies>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- 官方手册地址：https://logback.qos.ch/manual/index.html -->
+<!-- scan 配置文件如果发生改变，将会被重新加载  scanPeriod 检测间隔时间-->
+<configuration scan="true" scanPeriod="60 seconds" debug="false">
+
+    <!--日志格式应用spring boot默认的格式，也可以自己更改-->
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+
+    <!-- springProperty获取spring配置 定义log存储路径 -->
+    <springProperty scope="context" name="project_name" source="spring.application.name"/>
+    <springProperty scope="context" name="log_home" source="logging.home" defaultValue="logs"/>
+    <springProperty scope="context" name="max-history" source="logging.file.max-history" defaultValue="10"/>
+    <springProperty scope="context" name="max-size" source="logging.file.max-size" defaultValue="20MB"/>
+    <springProperty scope="context" name="total-size-cap" source="logging.file.total-size-cap" defaultValue="500MB"/>
+
+
+    <!-- appender ConsoleAppender:控制台 ... -->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} %level -- [%t{8}] %logger{20}: %m%n</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+    </appender>
+
+    <!-- appender info文件  RollingFileAppender:滚动文件 ... -->
+    <appender name="FILE_INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 追加方式记录日志 -->
+        <append>true</append>
+        <!-- 正在记录的日志文件的路径及文件名 -->
+        <file>${log_home}/${project_name}/info.log</file>
+
+        <!-- 日志记录器的滚动策略  SizeAndTimeBasedRollingPolicy:按日期&大小滚动 ... -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 归档的日志文件的路径，%d{yyyy-MM-dd}指定日期格式，%i指定索引 -->
+            <fileNamePattern>${log_home}/${project_name}/info/info-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <!-- 最大历史量，按天滚动则为天数 -->
+            <maxHistory>${max-history}</maxHistory>
+            <!-- 总最大容量，超过将触发删除旧日志 -->
+            <totalSizeCap>${total-size-cap}</totalSizeCap>
+
+            <!-- 最大文件大小 若超过，日志文件会以索引0开始归档日志文件，例如log-2020-01-01.0.log -->
+            <!-- 由SizeAndTimeBasedRollingPolicy支持(其继承于TimeBasedRollingPolicy),rollingPolicy可直接设为它无需再次手动配置timeBasedFileNamingAndTriggeringPolicy -->
+            <maxFileSize>${max-size}</maxFileSize>
+        </rollingPolicy>
+
+        <!-- 日志格式 -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+
+        <!-- 过滤器 LevelFilter:对指定级别配过滤策略 ThresholdFilter:配置过滤级别阈值 ... -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>error</level>
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+    </appender>
+
+    <!-- appender error文件  RollingFileAppender:滚动文件 ... -->
+    <appender name="FILE_ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!-- 追加方式记录日志 -->
+        <append>true</append>
+        <!-- 正在记录的日志文件的路径及文件名 -->
+        <file>${log_home}/${project_name}/error.log</file>
+
+        <!-- 日志记录器的滚动策略  SizeAndTimeBasedRollingPolicy:按日期&大小滚动 ... -->
+        <rollingPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedRollingPolicy">
+            <!-- 归档的日志文件的路径，%d{yyyy-MM-dd}指定日期格式，%i指定索引 -->
+            <fileNamePattern>${log_home}/${project_name}/error/error-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+
+            <!-- 最大历史量，按天滚动则为天数 -->
+            <maxHistory>${max-history}</maxHistory>
+            <!-- 总最大容量，超过将触发删除旧日志 -->
+            <totalSizeCap>${total-size-cap}</totalSizeCap>
+
+            <!-- 最大文件大小 若超过，日志文件会以索引0开始归档日志文件，例如log-2020-01-01.0.log -->
+            <!-- 由SizeAndTimeBasedRollingPolicy支持(其继承于TimeBasedRollingPolicy),rollingPolicy可直接设为它无需再次手动配置timeBasedFileNamingAndTriggeringPolicy -->
+            <maxFileSize>${max-size}</maxFileSize>
+        </rollingPolicy>
+
+        <!-- 日志格式 -->
+        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
+            <pattern>${FILE_LOG_PATTERN}</pattern>
+            <charset>utf-8</charset>
+        </encoder>
+
+        <!-- 过滤器 LevelFilter:对指定级别配过滤策略 ThresholdFilter:配置过滤级别阈值 ... -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>error</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+
+    <!-- 配置root对应的日志级别、目标适配器 -->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+        <appender-ref ref="FILE_ERROR"/>
+        <appender-ref ref="FILE_INFO"/>
+    </root>
+
+</configuration>

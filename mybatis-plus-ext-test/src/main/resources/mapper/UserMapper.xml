@@ -2,8 +2,18 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.xuwen.mybatisplusexttest.mapper.UserMapper">
+<mapper namespace="io.github.vwenx.mpext.mapper.UserMapper">
 
-
+    <sql id="createTable">
+        CREATE TABLE `test_user` (
+             `id` int(11) unsigned NOT NULL AUTO_INCREMENT COMMENT '用户id',
+             `code` char(3) CHARACTER SET latin1 NOT NULL COMMENT '编号',
+             `name` varchar(32) NOT NULL COMMENT '名称',
+             `age` tinyint(4) NOT NULL COMMENT '年龄',
+             `deleted_at` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT '删除时间戳毫秒 0-未删除',
+             PRIMARY KEY (`id`),
+             UNIQUE KEY `code` (`code`,`deleted_at`) USING BTREE
+        ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='测试用户表';
+    </sql>
 
 </mapper>

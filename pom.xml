@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <parent>
+        <groupId>io.github.vwenx</groupId>
+        <artifactId>wen-plugin-parent</artifactId>
+        <version>1.0.0</version>
+    </parent>
+
+    <artifactId>mybatis-plus-ext-parent</artifactId>
+    <version>${mybatis-plus-ext.version}</version>
+    <packaging>pom</packaging>
+
+    <name>mybatis-plus-ext-parent</name>
+    <description>对mybatis-plus的扩展</description>
+    <url>https://gitee.com/VwenX/mybatis-plus-ext</url>
+
+    <modules>
+        <module>mybatis-plus-ext-bean</module>
+        <module>mybatis-plus-ext</module>
+    </modules>
+
+    <properties>
+        <mybatis-plus-ext.version>1.0.0</mybatis-plus-ext.version>
+    </properties>
+
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>io.github.vwenx</groupId>
+                <artifactId>mybatis-plus-ext-bean</artifactId>
+                <version>${mybatis-plus-ext.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>com.baomidou</groupId>
+                <artifactId>mybatis-plus</artifactId>
+                <version>3.5.3</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>com.github.pagehelper</groupId>
+                <artifactId>pagehelper</artifactId>
+                <version>5.3.2</version>
+                <scope>provided</scope>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
+    <!-- 快照版依赖使用sonatype快照仓库 -->
+    <repositories>
+        <repository>
+            <id>ossrh-snapshots</id>
+            <name>ossrh快照仓库</name>
+            <url>https://s01.oss.sonatype.org/content/repositories/snapshots</url>
+            <releases>
+                <enabled>false</enabled>
+            </releases>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
+</project>
