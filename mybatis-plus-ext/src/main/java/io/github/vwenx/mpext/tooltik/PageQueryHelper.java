@@ -15,7 +15,12 @@ public class PageQueryHelper {
 
     /**
      * listOrPage系列均为可选分页
+     * @param pageNo 页码
+     * @param pageSize 页大小
+     * @param count 是否统计总数
+     * @param query 查询
      * @return List / PageHelper的Page
+     * @param <E> 实体类型
      */
     public static  <E> List<E> listOrPage(Number pageNo, Number pageSize, boolean count, Supplier<List<E>> query){
         int pSize = pageSize==null ? -1 : pageSize.intValue();
