@@ -12,7 +12,6 @@
     </parent>
 
     <artifactId>mybatis-plus-ext-bean</artifactId>
-    <version>${mybatis-plus-ext.version}</version>
 
     <name>mybatis-plus-ext-bean</name>
     <description>注解、参数等非功能逻辑的实体包</description>

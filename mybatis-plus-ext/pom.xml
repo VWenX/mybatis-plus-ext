@@ -12,7 +12,6 @@
     </parent>
 
     <artifactId>mybatis-plus-ext</artifactId>
-    <version>${mybatis-plus-ext.version}</version>
 
 
 
